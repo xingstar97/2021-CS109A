@@ -46,9 +46,11 @@ def get_tree_scores(x_train, y_train, model, tree_depth_range, bootstraps = 1):
         for depth in tree_depths:
             
             model.max_depth = depth
+            # !!!!!!!!!
 
             if bootstraps > 1:
                 x_train_boot, y_train_boot = resample(x_train, y_train)
+                # n_samplesint, default = None, Number of samples to generate. If left to None this is automatically set to the first dimension of the arrays. 
                 score = cross_val_score(estimator=model, X=x_train_boot, y=y_train_boot, n_jobs=-1, cv= 10)
             else:
                 score = cross_val_score(estimator=model, X=x_train, y=y_train, n_jobs=-1, cv= 10)
@@ -66,6 +68,12 @@ def get_tree_scores(x_train, y_train, model, tree_depth_range, bootstraps = 1):
 def load_cancer_dataset(n, random_state):
     
     random_state = np.random.RandomState(random_state)
+
+# numpy.random.RandomState is a pseudorandom number generator class that can generate random numbers with a given seed value.
+# By initializing an instance of RandomState with a specific seed value, the same sequence of random numbers can be generated each time the program is run
+# rng = np.random.RandomState(42)
+# random_numbers = rng.rand(5)
+
 
     #load the data
     dataset = datasets.load_breast_cancer() 

@@ -6,7 +6,7 @@ from matplotlib.colors import ListedColormap
 sns.set_style('white')
 import pandas as pd
 
-df = pd.read_csv("boostingclassifier.csv")
+df = pd.read_csv("../data/boostingclassifier.csv")
 X = df[['latitude', 'longitude']].values
 
 y = df['landtype'].values
@@ -21,6 +21,8 @@ def plot_decision_boundary(classifier, X, y, N=10, scatter_weights=np.ones(len(y
 
     # Check what methods are available
     if hasattr(classifier, "decision_function"):
+        # The hasattr() function returns True if the specified object has the specified attribute, otherwise False.
+        # e.g., whether estimator has the decision_function attibute
         zz = np.array([classifier.decision_function(np.array([xi, yi]).reshape(1, -1)) for xi, yi in
                        zip(np.ravel(xx), np.ravel(yy))])
     elif hasattr(classifier, "predict_proba"):
@@ -44,6 +46,7 @@ def plot_decision_boundary(classifier, X, y, N=10, scatter_weights=np.ones(len(y
     else:
         ax.scatter(X[:, 0], X[:, 1], c=y, cmap=cm_bright, s=scatter_weights * 40, edgecolors='k',
                    label=f'Stump {counter}')
+        # !!!!!!! s is a list
     ax.set_xlabel('$Latitude$', fontsize=14)
     ax.set_ylabel('$Longitude$', fontsize=14)
     ax.set_title(f'Stump {counter + 1} decision boundary', fontsize=16)
